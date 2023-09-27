@@ -3,7 +3,7 @@ package utils.testBase;
 public class TestCaseFailed extends Exception{
     private static final long serialVersionUID = 1L;
 
-    String message = null;
+    private String message = null;
 
     public TestCaseFailed() {
         super();
