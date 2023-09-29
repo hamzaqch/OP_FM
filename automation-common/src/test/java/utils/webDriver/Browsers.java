@@ -1,6 +1,7 @@
 package utils.webDriver;
 
-public enum Browser {
+public enum Browsers {
     CHROME,
-    FIREFOX
+    FIREFOX,
+
 }

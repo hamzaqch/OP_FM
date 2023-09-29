@@ -1,7 +1,6 @@
 package utils.webDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,7 +10,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 /**
  * DriverManager Class it generate a driver base on the configuration you set
  */
-public class DriverManager implements Setup{
+public class DriverManager {
     /**
      * Create a local thread-safe code by given the interface @WebDriver as and input
      */
@@ -27,19 +26,16 @@ public class DriverManager implements Setup{
     private static WebDriver driver;
     private static final ChromeOptions chromeOptions = new ChromeOptions();
     private static final FirefoxOptions firefoxOptions = new FirefoxOptions();
-
+    private static final boolean headless = false;
+    private static final Browsers browsers = Browsers.CHROME;
     /**
-     * Method to select the type of Browser you want to run
-     * @param browser: For now can CHROME or FIREFOX
-     * @param headless: True to run headless or False for not
+     * Method to select the type of Browsers you want to run
      */
-    @Override
-    public void setupDriver(@NotNull Browser browser, boolean headless) {
-    switch (browser) {
+    private static WebDriver setupDriver() {
+    switch (browsers) {
         case CHROME:
             WebDriverManager.chromedriver().setup();
-            getChromeOptions(headless);
-            driver = new ChromeDriver(chromeOptions);
+            driver = new ChromeDriver(getChromeOptions());
             break;
         case FIREFOX:
             WebDriverManager.firefoxdriver().setup();
@@ -47,16 +43,18 @@ public class DriverManager implements Setup{
             driver = new FirefoxDriver(firefoxOptions);
             break;
     }
-    setDriver();
+        setDriver(driver);
+        driver.manage().deleteAllCookies();
+        driver.manage().window().maximize();
+        closeDriver();
+    return driver;
     }
 
     /**
      * Method to set ChromeOptions
-     * @param headless: True to run headless or False for not
      */
-    @NotNull
-    private static ChromeOptions getChromeOptions(boolean headless) {
 
+    private static ChromeOptions getChromeOptions() {
         chromeOptions.addArguments(ChromeArg.setRemoteAllowOrigin);
         chromeOptions.addArguments(ChromeArg.setNoSandbox);
         chromeOptions.addArguments(ChromeArg.setSizeMaximized);
@@ -69,27 +67,29 @@ public class DriverManager implements Setup{
     /**
      * Method to set instance of the Driver
      */
-    private static void setDriver() {
+    private static void setDriver(WebDriver driver) {
         thread_instanceOfDriver.set(driver);
     }
 
     /**
      * Method to get an instance of the Driver
-     * @return
      */
-    @Override
-    public WebDriver getDriver() {
-        return thread_instanceOfDriver.get();
+    protected WebDriver getDriver() {
+        if(thread_instanceOfDriver.get() != null) return thread_instanceOfDriver.get();
+        else return getDefaultDriver();
+    }
+
+    private WebDriver getDefaultDriver() {
+        if (thread_instanceOfDriver.get() != null) return thread_instanceOfDriver.get();
+        driver = setupDriver();
+        return getDriver();
     }
 
     /**
      * Method to close the Driver
      */
-    @Override
-    public void closeDriver() {
+    private static void closeDriver() {
         Runtime.getRuntime().addShutdownHook(close_Thread);
     }
-
-
 
 }
