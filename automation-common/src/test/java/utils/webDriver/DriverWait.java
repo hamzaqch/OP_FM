@@ -17,7 +17,7 @@ public class DriverWait {
         this.delay = delayInSeconds(5);
     }
 
-    private long delayInSeconds(long delay) {
+    public long delayInSeconds(long delay) {
         try {
             Thread.sleep(delay * 1000); // Sleep for 'seconds' seconds
         } catch (InterruptedException e) {

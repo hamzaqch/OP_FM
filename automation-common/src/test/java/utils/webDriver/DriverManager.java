@@ -74,7 +74,7 @@ public class DriverManager {
     /**
      * Method to get an instance of the Driver
      */
-    protected WebDriver getDriver() {
+    public WebDriver getDriver() {
         if(thread_instanceOfDriver.get() != null) return thread_instanceOfDriver.get();
         else return getDefaultDriver();
     }
