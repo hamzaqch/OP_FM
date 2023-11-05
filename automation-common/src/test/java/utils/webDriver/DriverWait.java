@@ -27,15 +27,13 @@ public class DriverWait {
     }
 
     protected Wait<WebDriver> waitLong() {
-        //TODO: delayInSeconds(2);
         return new FluentWait<>(driverManager.getDriver())
                 .withTimeout(Duration.ofSeconds(Constants.timeoutLong))
                 .pollingEvery(Duration.ofSeconds(Constants.pollingLong))
-                .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
+                .ignoring(StaleElementReferenceException.class, ElementClickInterceptedException.class);
     }
 
-    protected Wait<WebDriver> waitShort() {
-        //TODO: delayInSeconds(1);
+    public Wait<WebDriver> waitShort() {
         return new FluentWait<>(driverManager.getDriver())
                 .withTimeout(Duration.ofSeconds(Constants.timeoutShort))
                 .pollingEvery(Duration.ofSeconds(Constants.pollingShort))

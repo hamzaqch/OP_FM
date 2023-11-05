@@ -2,10 +2,11 @@ package utils.webDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.events.WebDriverListener;
 
 /**
  * DriverManager Class it generate a driver base on the configuration you set
@@ -27,22 +28,12 @@ public class DriverManager {
     private static final ChromeOptions chromeOptions = new ChromeOptions();
     private static final FirefoxOptions firefoxOptions = new FirefoxOptions();
     private static final boolean headless = false;
-    private static final Browsers browsers = Browsers.CHROME;
     /**
      * Method to select the type of Browsers you want to run
      */
     private static WebDriver setupDriver() {
-    switch (browsers) {
-        case CHROME:
-            WebDriverManager.chromedriver().setup();
+            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")  + "/chromedriver");
             driver = new ChromeDriver(getChromeOptions());
-            break;
-        case FIREFOX:
-            WebDriverManager.firefoxdriver().setup();
-            firefoxOptions.setHeadless(headless);
-            driver = new FirefoxDriver(firefoxOptions);
-            break;
-    }
         setDriver(driver);
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
@@ -55,11 +46,11 @@ public class DriverManager {
      */
 
     private static ChromeOptions getChromeOptions() {
-        chromeOptions.addArguments(ChromeArg.setRemoteAllowOrigin);
-        chromeOptions.addArguments(ChromeArg.setNoSandbox);
-        chromeOptions.addArguments(ChromeArg.setSizeMaximized);
+        chromeOptions.addArguments(Chrome.CHROME.setRemoteAllowOrigin());
+        chromeOptions.addArguments(Chrome.CHROME.setNoSandbox());
+        chromeOptions.addArguments(Chrome.CHROME.setSizeMaximized());
         if (headless) {
-            chromeOptions.addArguments(ChromeArg.setHeadless);
+            chromeOptions.addArguments(Chrome.CHROME.setHeadless());
         }
         return chromeOptions;
     }
