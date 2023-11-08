@@ -1,12 +1,8 @@
 package utils.webDriver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.events.WebDriverListener;
 
 /**
  * DriverManager Class it generate a driver base on the configuration you set
@@ -25,33 +21,39 @@ public class DriverManager {
      * Declare a static object fo the class @WebDriver
      */
     private static WebDriver driver;
-    private static final ChromeOptions chromeOptions = new ChromeOptions();
-    private static final FirefoxOptions firefoxOptions = new FirefoxOptions();
-    private static final boolean headless = false;
+
     /**
      * Method to select the type of Browsers you want to run
      */
     private static WebDriver setupDriver() {
-            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")  + "/chromedriver");
-            driver = new ChromeDriver(getChromeOptions());
+        if (System.getProperty("os.name").equalsIgnoreCase(SystemPlatform.LINUX.name())) {
+            SystemPlatform linux = SystemPlatform.LINUX;
+        } else if (System.getProperty("os.name").equalsIgnoreCase(SystemPlatform.WINDOWS.name())) {
+            SystemPlatform linux = SystemPlatform.WINDOWS;
+        }
+        driver = new ChromeDriver(getChromeOptions(false));
         setDriver(driver);
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-        closeDriver();
+        //closeDriver();
     return driver;
     }
 
     /**
      * Method to set ChromeOptions
      */
-
-    private static ChromeOptions getChromeOptions() {
-        chromeOptions.addArguments(Chrome.CHROME.setRemoteAllowOrigin());
-        chromeOptions.addArguments(Chrome.CHROME.setNoSandbox());
-        chromeOptions.addArguments(Chrome.CHROME.setSizeMaximized());
-        if (headless) {
-            chromeOptions.addArguments(Chrome.CHROME.setHeadless());
-        }
+    private static ChromeOptions getChromeOptions(Boolean setHeadless) {
+        ChromeOptions chromeOptions = new ChromeOptions();;
+        chromeOptions.addArguments("--remote-allow-origins=*");
+        chromeOptions.addArguments("window-size=1920,1080");
+        chromeOptions.addArguments("-incognito");
+        chromeOptions.addArguments("start-maximized");
+        chromeOptions.addArguments("disable-infobars");
+        chromeOptions.addArguments("--disable-extensions");
+        chromeOptions.addArguments("--disable-gpu");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
+        chromeOptions.addArguments("--no-sandbox");
+        if (setHeadless == true) chromeOptions.addArguments("--headless");
         return chromeOptions;
     }
 

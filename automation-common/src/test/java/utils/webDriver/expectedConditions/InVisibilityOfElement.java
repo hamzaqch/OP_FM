@@ -4,7 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class InVisibilityOfElement extends BaseWait<Boolean, WebElement> {
-    protected InVisibilityOfElement(WebElement input) {
+    public InVisibilityOfElement(WebElement input) {
         super(input);
     }
 

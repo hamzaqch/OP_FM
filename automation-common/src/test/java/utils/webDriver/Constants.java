@@ -1,10 +1,13 @@
 package utils.webDriver;
 
+/**
+ * Constant to use for the Wait 'fluentWait'
+ */
 public abstract class Constants {
 
-    protected static final long timeoutLong = 30;
-    protected static final  long pollingLong = 200;
-    protected static final long timeoutShort = 10;
-    protected static final long pollingShort = 100;
+    public static final long timeoutLong = 30;
+    public static final  long pollingLong = 200;
+    public static final long timeoutShort = 10;
+    public static final long pollingShort = 100;
 
 }

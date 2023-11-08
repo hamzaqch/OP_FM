@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class InVisibilityOfElementByLocator extends BaseWait<Boolean, By> {
-    protected InVisibilityOfElementByLocator(By input) {
+    public InVisibilityOfElementByLocator(By input) {
         super(input);
     }
 

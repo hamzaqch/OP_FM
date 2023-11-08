@@ -1,26 +1,24 @@
 package utils.webDriver.expectedConditions;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class ApplicabilityOfElementByLocator extends BaseWait implements ExpectedCondition<WebElement> {
-    private final By locator;
+public class ApplicabilityOfElementByLocator extends BaseWait<WebElement, By> {
 
-    public ApplicabilityOfElementByLocator(By locator) {
-        this.locator = locator;
+    public ApplicabilityOfElementByLocator(By input) {
+        super(input);
     }
 
     @Override
     public WebElement apply(WebDriver driver) {
         try {
-            return fluentWait(driver).until(ExpectedConditions.elementToBeClickable(locator));
+            return fluentWait(driver).until(ExpectedConditions.visibilityOfElementLocated(input));
         }
         catch (NoSuchElementException | StaleElementReferenceException message) {
-            return driver.findElement(locator);
+            return driver.findElement(input);
         }
-        catch (Throwable message) {
-            throw new Error(message);
+        catch (Throwable e) {
+            throw new Error(e);
         }
     }
 }
