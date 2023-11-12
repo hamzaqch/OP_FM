@@ -8,46 +8,10 @@
   <name>Archetype - OP_FM</name>
   <url>http://maven.apache.org</url>
   <modules>
-    <module>automation-common</module>
     <module>restAPI_RestAssured</module>
   </modules>
 
   <dependencies>
-
-    <!--  These are the junit dependencies  -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!--  These are the selenium dependencies  -->
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>4.8.1</version>
-    </dependency>
-
-    <!-- These are the Logger dependencies -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>2.0.7</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>2.0.7</version>
-    </dependency>
-
-    <!-- These are the TestNg dependencies -->
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>7.8.0</version>
-      <scope>test</scope>
-    </dependency>
 
   </dependencies>
 
