@@ -9,7 +9,7 @@ import utils.config.Config;
 
 public class ClickElementsMethods extends Config {
 
-    private WebElement element;
+    private WebElement element = null;
 
     /**
      * Method to click On the WebElement by element
